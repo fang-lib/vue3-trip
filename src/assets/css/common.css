@@ -5,9 +5,28 @@
   --van-search-left-icon-color: var(--primary-color) !important;
   --van-index-anchor-sticky-text-color: var(--van-primary-color) !important;
   --van-index-bar-index-active-color: var(--van-primary-color) !important;
+  --van-calendar-popup-height: 100% !important;
 }
 
 /* 导航栏的字体颜色 */
 .van-nav-bar__title {
   color: var(--primary-color) !important;
+}
+
+.solid-btn {
+  width: 100%;
+  margin: 8px auto;
+  line-height: 38px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+  background-image: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+}
+.over-two_ell {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }

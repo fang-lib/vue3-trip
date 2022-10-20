@@ -4,7 +4,9 @@ const useSearch = defineStore('search', {
   state() {
     return {
       city: '广州',
-      cityInfo: {}
+      cityInfo: {},
+      startDate: 0,
+      endDate: 0
     }
   }
 })
