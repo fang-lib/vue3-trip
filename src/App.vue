@@ -1,13 +1,18 @@
 <template>
   <div class="app">
-    <h2>{{ userStore.name }}</h2>
     <router-view></router-view>
+    <z-tabbar v-if="!isHideTabBar"></z-tabbar>
   </div>
 </template>
 
 <script setup>
-  import useUser from "@/stores/modules/user" 
-  const userStore = useUser()
+import { ref, watch } from "vue"
+import { useRoute } from "vue-router"
+const route = useRoute()
+const isHideTabBar = ref(false)
+watch(() => route.path, () => {
+  isHideTabBar.value = route.meta.isHideTabBar
+})
 
 </script>
 

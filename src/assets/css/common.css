@@ -1,0 +1,13 @@
+:root {
+  /* 重置基础颜色 */
+  --primary-color: #ff9645;
+  --van-primary-color: var(--primary-color) !important;
+  --van-search-left-icon-color: var(--primary-color) !important;
+  --van-index-anchor-sticky-text-color: var(--van-primary-color) !important;
+  --van-index-bar-index-active-color: var(--van-primary-color) !important;
+}
+
+/* 导航栏的字体颜色 */
+.van-nav-bar__title {
+  color: var(--primary-color) !important;
+}

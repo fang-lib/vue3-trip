@@ -17,7 +17,7 @@ class HYRequest{
     })
     this.instance.interceptors.response.use(res => {
       // TODO:状态码的处理
-      return res.data
+      return res.data.data
     }, err => {
       return Promise.reject(err)
     })
@@ -31,10 +31,10 @@ class HYRequest{
       })
    })
   }
-  get(url, config) {
+  get(config) {
     return this.instance.request({...config, method: 'get'})
   }
-  post(url, config) {
+  post(config) {
     return this.instance.request({...config, method: 'post'})
   }
 }
