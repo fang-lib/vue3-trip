@@ -15,12 +15,12 @@
       <div class="time-box">
         <div class="item" @click="isShow=true">
           <div class="label">入住</div>
-          <div class="time">{{ formatDate(startDate, 'M月DD日') }}</div>
+          <div class="time">{{ day.formatDate(startDate, 'M月DD日') }}</div>
         </div>
-        <div class="item stay-item">共{{ diffDate(startDate, endDate) }}晚</div>
+        <div class="item stay-item">共{{ day.diffDate(startDate, endDate, 'day') }}晚</div>
         <div class="item" @click="isShow=true">
           <div class="label">离店</div>
-          <div class="time">{{ formatDate(endDate, 'M月DD日') }}</div>
+          <div class="time">{{ day.formatDate(endDate, 'M月DD日') }}</div>
         </div>
       </div>
       <div class="search-label_box">
@@ -42,7 +42,6 @@
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { storeToRefs } from "pinia"
-import { formatDate, diffDate } from "@/utils/date"
 import useSearch from "@/stores/modules/search"
 
 defineProps({

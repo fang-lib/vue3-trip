@@ -11,8 +11,6 @@
         <item-v9 v-if="item.discoveryContentType === 9" :info="item.data"></item-v9> 
         <item-v3 v-if="item.discoveryContentType === 3" :info="item.data"></item-v3>
       </template>
-      
-     
     </div>
   </div>
 </template>
@@ -44,7 +42,7 @@ getHouseList({page: 1}).then(res => {
 <style lang="less" scoped>
 .home {
   padding-bottom: 50px;
-  background: #f8f8f8;
+  // background: #f8f8f8;
 }
   .cover-img {
     width: 100%;
