@@ -92,6 +92,7 @@ function toHome() {
 <style lang="less" scoped>
 .favor {
   position: relative;
+  padding-bottom: 50px;
 }
 .title-box {
   display: flex;
