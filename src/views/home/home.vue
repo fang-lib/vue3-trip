@@ -26,6 +26,11 @@ import itemV3 from "@/views/home/cpns/item-v3.vue"
 const hotSuggests = ref([])
 const category = ref([])
 const houseList = ref([])
+const currentPage = ref(1)
+// 滚动数据
+const scrollTop = ref(0)
+const scrollHeight = ref(0)
+const clientHeight = ref(0)
 
 // 请求数据
 getHotSuggests().then(res => {
@@ -34,9 +39,21 @@ getHotSuggests().then(res => {
 getCategory().then(res => {
   category.value = res
 })
-getHouseList({page: 1}).then(res => {
-  houseList.value = res
-}) 
+function getHouseListData() {
+  getHouseList({page: currentPage.value++}).then(res => {
+    houseList.value.push(...res)
+  }) 
+}
+getHouseListData()
+document.addEventListener('scroll', () => {
+  scrollTop.value = document.documentElement.scrollTop
+  scrollHeight.value = document.documentElement.scrollHeight
+  clientHeight.value = document.documentElement.clientHeight
+  if(scrollTop.value + clientHeight.value >= scrollHeight.value) {
+    console.log('滚动到底部')
+    getHouseListData()
+  }
+})
 </script>
 
 <style lang="less" scoped>

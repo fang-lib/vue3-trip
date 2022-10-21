@@ -10,7 +10,7 @@
     <div class="item-price_box">
       <div class="item-current_price">¥{{ info.finalPrice }}</div>
       <div class="item-old_price">¥{{ info.productPrice }}</div>
-      <div class="item-discount">{{ info.priceTipBadge.text }}</div>
+      <div class="item-discount">{{ info.priceTipBadge?.text }}</div>
     </div>
   </div>
 </template>
