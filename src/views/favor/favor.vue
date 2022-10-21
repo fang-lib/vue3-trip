@@ -1,13 +1,16 @@
 <template>
   <div class="favor">
-    <z-navbar backtext="旅途">
-      <template #title>
-        <div class="title-box">
-          <div :class="['title', currentTitleIndex == 0 ? 'title-active' : '']" @click="titleChange(0)">我的收藏</div>
-          <div :class="['title', currentTitleIndex == 1 ? 'title-active' : '']" @click="titleChange(1)">浏览历史</div>
-        </div>
-      </template>
-    </z-navbar>
+    <van-sticky>
+      <z-navbar backtext="旅途">
+        <template #title>
+          <div class="title-box">
+            <div :class="['title', currentTitleIndex == 0 ? 'title-active' : '']" @click="titleChange(0)">我的收藏</div>
+            <div :class="['title', currentTitleIndex == 1 ? 'title-active' : '']" @click="titleChange(1)">浏览历史</div>
+          </div>
+        </template>
+      </z-navbar>
+    </van-sticky>
+    
     <!-- 我的收藏 -->
     <van-tabs v-if="currentTitleIndex === 0" color="#ff9645" v-model:active="type" @change="typeChange">
       <van-tab v-for="(item, index) in typeList" :key="index" :title="item.text">
