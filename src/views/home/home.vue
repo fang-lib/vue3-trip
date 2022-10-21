@@ -2,7 +2,7 @@
   <div class="home">
     <van-nav-bar title="弘源旅途" ></van-nav-bar>
     <img class="cover-img" src="@/assets/img/home/banner.webp" />
-    <search-bar :tagList="hotSuggests"></search-bar>
+    <search :tagList="hotSuggests"></search>
     <category-list :list="category"></category-list>
     <!-- 热门精选 -->
     <h3 class="hot-title">热门精选</h3>
@@ -12,25 +12,25 @@
         <item-v3 v-if="item.discoveryContentType === 3" :info="item.data"></item-v3>
       </template>
     </div>
+    <search-bar v-if="isShowSearchBar"></search-bar>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, toRefs, watch } from "vue"
 import { getHotSuggests, getCategory, getHouseList } from "@/services/modules/home"
-import searchBar from "@/views/home/cpns/search-bar.vue"
+import  { onScrolling } from "@/hooks/scrolling"
+import search from "@/views/home/cpns/search.vue"
 import categoryList from "@/views/home/cpns/category-list.vue"
 import itemV9 from "@/views/home/cpns/item-v9.vue"
 import itemV3 from "@/views/home/cpns/item-v3.vue"
+import searchBar from "@/views/home/cpns/search-bar.vue"
 
 const hotSuggests = ref([])
 const category = ref([])
 const houseList = ref([])
 const currentPage = ref(1)
-// 滚动数据
-const scrollTop = ref(0)
-const scrollHeight = ref(0)
-const clientHeight = ref(0)
+const isShowSearchBar = ref(false)
 
 // 请求数据
 getHotSuggests().then(res => {
@@ -45,15 +45,17 @@ function getHouseListData() {
   }) 
 }
 getHouseListData()
-document.addEventListener('scroll', () => {
-  scrollTop.value = document.documentElement.scrollTop
-  scrollHeight.value = document.documentElement.scrollHeight
-  clientHeight.value = document.documentElement.clientHeight
-  if(scrollTop.value + clientHeight.value >= scrollHeight.value) {
-    console.log('滚动到底部')
-    getHouseListData()
+onScrolling(getHouseListData)
+const { scrollTop } = toRefs(onScrolling(getHouseListData))
+watch(scrollTop, () => {
+  if(scrollTop.value > 300) {
+    isShowSearchBar.value = true
+  } else {
+    isShowSearchBar.value = false
   }
 })
+
+
 </script>
 
 <style lang="less" scoped>

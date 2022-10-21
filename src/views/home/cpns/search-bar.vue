@@ -1,160 +1,63 @@
 <template>
   <div class="search-bar">
-     <!-- 筛选 -->
-     <div class="screen-box">
-      <div class="address-box" @click="toCity">
-        <div class="address-text">
-          {{ city }}
-        </div>
-        <div class="location-box">
-          <div class="location-label">我的位置</div>
-          <img class="location-icon" src="@/assets/img/home/icon_location.png" />
-        </div>
+    <div class="time-box">
+      <div class="time-cell">
+        <span class="time-cell_label">住</span>
+        <span class="item-cell_value">{{ day.formatDate(startDate, 'MM.DD') }}</span>
       </div>
-      <!-- 时间 -->
-      <div class="time-box">
-        <div class="item" @click="isShow=true">
-          <div class="label">入住</div>
-          <div class="time">{{ day.formatDate(startDate, 'M月DD日') }}</div>
-        </div>
-        <div class="item stay-item">共{{ day.diffDate(startDate, endDate, 'day') }}晚</div>
-        <div class="item" @click="isShow=true">
-          <div class="label">离店</div>
-          <div class="time">{{ day.formatDate(endDate, 'M月DD日') }}</div>
-        </div>
+      <div class="time-cell">
+        <span class="time-cell_label">离</span>
+        <span class="item-cell_value">{{ day.formatDate(endDate, 'MM.DD') }}</span>
       </div>
-      <div class="search-label_box">
-        <div class="label">价格不限</div>
-        <div class="label">人数不限</div>
-      </div>
-      <div class="search-label_box">关键字/位置/民宿名</div>
-      <div class="hot-suugests_box">
-        <div class="item" v-for="item in tagList" :key="item.tagText?.text">{{ item.tagText?.text }}</div>
-      </div>
-      <div class="solid-btn">开始搜索</div>
-      <!-- 日历 -->
-      <van-calendar v-model:show="isShow" type="range" color="#ff9645" @confirm="onConfirm"></van-calendar>
     </div>
+    <van-cell-group inset>
+      <van-field disabled right-icon="search" placeholder="关键词/位置/民宿"></van-field>
+    </van-cell-group>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
 import { storeToRefs } from "pinia"
-import useSearch from "@/stores/modules/search"
-
-defineProps({
-  tagList: {
-    type: Array,
-    default: () => []
-  }
-})
-
-const router = useRouter()
-const searchStore = useSearch()
-const isShow = ref(false)
-const { city, startDate, endDate } = storeToRefs(searchStore)
-
-// 初始化入住日期
-searchStore.startDate = new Date().getTime()
-searchStore.endDate = startDate.value + 24*60*60*1000
-
-
-function toCity() {
-  router.push('/city')
-}
-function onConfirm(e) {
-  isShow.value = false
-  searchStore.startDate = new Date(e[0]).getTime()
-  searchStore.endDate = new Date(e[1]).getTime()
-}
+import useSearch from "@/stores/modules/search.js"
+const { startDate, endDate } = storeToRefs(useSearch())
 </script>
 
 <style lang="less" scoped>
-  .screen-box {
-    padding: 0 20px;
+.search-bar {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  background: #fff;
 
-    .address-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 45px;
-      font-size: 15px;
-
-      .location-box {
-        display: flex;
-        align-items: center;
-
-        .location-label {
-          flex: 1;
-          margin-right: 8px;
-          font-size: 12px;
-          color: #666;
-        }
-        .location-icon {
-          width: 18px;
-          height: 18px;
-          margin-left: 8px;
-          margin-top: -3px;
-        }
-      }
-    }
-  }
   .time-box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 6px 0 0 6px;
+    background: #f2f4f6;
+    font-size: 14px;
 
-    .item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-size: 12px;
-
-      .label {
-        color: #999;
-      }
-      .time {
-        margin-top: 3px;
-        font-size: 15px;
-      }
-    }
-    .stay-item {
+    .time-cell_label {
+      margin-right: 3px;
       color: #666;
     }
   }
-  .search-label_box {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    height: 45px;
-    line-height: 45px;
-    font-size: 14px;
-    color: #999;
-
-    .label {
-      flex: 1;
-      &:first-child {
-        flex: 2;
-      }
-    }
+  :deep(.van-cell-group) {
+    flex: 1;
   }
-  .hot-suugests_box {
-    display: flex;
+  :deep(.van-cell ){
     align-items: center;
-    flex-wrap: wrap;
-    font-size: 12px;
-
-    .item {
-      padding: 4px 8px;
-      margin: 3px;
-      border-radius: 14px;
-      background-color: #f1f3f5;
-    }
+    height: 100%;
+    background: #f2f4f6;
   }
-  :deep(.van-popup--bottom.van-popup--round) {
-    border-radius: 0;
+  :deep(.van-cell-group--inset) {
+    border-radius: 0 8px 8px 0;
+    margin: 0 0 0 5px;
   }
+  :deep(.van-field__control) {
+    font-size: 16px;
+  }
+}
 </style>
