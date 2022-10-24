@@ -13,7 +13,7 @@
     
     <!-- 我的收藏 -->
     <van-tabs v-if="currentTitleIndex === 0" color="#ff9645" v-model:active="type" @change="typeChange">
-      <van-tab v-for="(item, index) in typeList" :key="index" :title="item.text">
+      <van-tab v-for="(item, index) in typeList" :key="index" :title="item">
         <div v-if="favorList.length > 0" class="item-box">
           <item v-for="(info, subIndex) in favorList" :key="subIndex" :info="info"></item>
         </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue"
+import { ref } from "vue"
 import { getFavorList, getFavorHistory } from "@/services/modules/favor"
 import zNavbar from "@/components/common/z-navbar.vue"
 import item from "@/views/favor/cpns/item.vue"
@@ -45,14 +45,7 @@ import { useRouter } from "vue-router"
 const router = useRouter()
 const currentTitleIndex = ref(0)
 const type = ref(0)
-const typeList = reactive([
-  {
-    text: '房东'
-  },
-  {
-    text: '房屋'
-  }
-])
+const typeList = ['房屋', '房东']
 const favorList = ref([])
 const historyList = ref([])
 

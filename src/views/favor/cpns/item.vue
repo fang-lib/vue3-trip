@@ -12,7 +12,7 @@
       </div>
       <div class="sore-box">
         <div class="sore-point">{{ info.commentBrief.overall }}分</div>
-        <div class="sore-label">推荐</div>
+        <div class="sore-label">{{ info.commentBrief.commentBrief }}</div>
       </div>
     </div>
     <div class="cell">
