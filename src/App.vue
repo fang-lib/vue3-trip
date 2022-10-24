@@ -2,13 +2,18 @@
   <div class="app">
     <router-view></router-view>
     <z-tabbar v-if="!isHideTabBar" :tabBarList="tabBarList"></z-tabbar>
+    <loading v-if="isLoading"></loading>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from "vue"
+import { storeToRefs } from "pinia"
 import { useRoute } from "vue-router"
+import useCommon from "@/stores/modules/common"
+import loading from "@/components/content/loading.vue"
 const route = useRoute()
+const { isLoading } = storeToRefs(useCommon())
 const isHideTabBar = ref(false)
 const tabBarList = [
     {

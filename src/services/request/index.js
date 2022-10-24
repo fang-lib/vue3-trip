@@ -1,5 +1,8 @@
 import axios from 'axios'
+import useCommon from "@/stores/modules/common"
 import { BASE_URL, TIMEOUT } from "@/services/request/config"
+
+const commonStore = useCommon()
 
 class HYRequest{
   constructor(baseUrl, timeout=10000) {
@@ -10,15 +13,27 @@ class HYRequest{
 
     // 拦截器
     this.instance.interceptors.request.use(config => {
+      const isShowLoading = config.isShowLoading ?? true
+      if(isShowLoading) {
+        commonStore.isLoading = true
+      }
       // TODO:请求拦截，token处理
       return config
     }, err => {
       return Promise.reject(err)
     })
     this.instance.interceptors.response.use(res => {
+      const isShowLoading = res.config.isShowLoading ?? true
+      if(isShowLoading) {
+        commonStore.isLoading = false
+      }
       // TODO:状态码的处理
       return res.data.data
     }, err => {
+      const isShowLoading = err.config.isShowLoading ?? true
+      if(isShowLoading) {
+        commonStore.isLoading = false
+      }
       return Promise.reject(err)
     })
   }
