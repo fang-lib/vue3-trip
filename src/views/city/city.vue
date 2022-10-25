@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <van-search placeholder="城市/区域/位置" show-action shape="round" v-model="searchValue" @cancel="handleBack"></van-search>
     <!-- 标签页面 -->
-      <van-tabs color="#ff9645" v-model:active="active" @change="tabChange">
+      <van-tabs color="#ff9645" v-model:active="active">
         <!-- 国内和海外列表 -->
         <template v-for="(value, key, index) in allCity" :key="key">
           <van-tab :title="value.title" :name="key"></van-tab>
