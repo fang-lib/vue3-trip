@@ -93,7 +93,8 @@ watch(scrollTop, (newValue) => {
 
 // 动态获取组件根元素
 const getRefs = (value) => {
-  if(!value) false
+  // 在还没有挂载之前，value为undefined
+  if(!value) return
   elRefs.value[value.$el.getAttribute('name')] = value.$el
 }
 
