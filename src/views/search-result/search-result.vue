@@ -70,8 +70,11 @@ function toSearch() {
     }
   }
   .title-desc {
+    flex: 1;
     margin-left: 3px;
     padding: 5px;
+    padding-top: 8px;
+    text-align: left;
     color: #999;
     background: #f2f4f6;
   }
@@ -79,5 +82,8 @@ function toSearch() {
 
 :deep(.van-nav-bar) {
   line-height: 1 !important;
+}
+:deep(.van-nav-bar__title ) {
+  flex: 1;
 }
 </style>
