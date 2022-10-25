@@ -17,7 +17,7 @@
   width: 100vw;
   height: 100vh;
   background: rgba(46, 46, 46, 0.2);
-  z-index: 1;
+  z-index: 9;
 
   .loading-img_box {
     position: absolute;
