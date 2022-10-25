@@ -3,14 +3,14 @@
     <!-- 搜索框 -->
     <van-search placeholder="城市/区域/位置" show-action shape="round" v-model="searchValue" @cancel="handleBack"></van-search>
     <!-- 标签页面 -->
-      <van-tabs color="#ff9645" v-model:active="active" @change="tabChange">
+      <van-tabs color="#ff9645" v-model:active="active">
         <div class="list-box">
           <!-- 国内和海外列表 -->
           <van-tab :title="allCity?.cityGroup?.title">
-            <list :info="currentCities" @onCityClick="handleBack"></list>
+            <list :info="allCity.cityGroup" @onCityClick="handleBack"></list>
           </van-tab>
           <van-tab :title="allCity?.cityGroupOverSea?.title">
-            <list :info="currentCities"></list>
+            <list :info="allCity.cityGroupOverSea"></list>
           </van-tab>
         </div>
       </van-tabs>
@@ -27,21 +27,11 @@ const router = useRouter()
 const searchValue = ref('')
 const allCity = ref({})
 const active = ref()
-const currentCities = ref({})
 
 // 获取所有城市信息
 getAllCity().then(res => {
   allCity.value = res
-  currentCities.value = allCity.value.cityGroup
 })
-
-function tabChange() {
-  if(active.value === 0) {
-    currentCities.value = allCity.value.cityGroup
-  } else {
-    currentCities.value = allCity.value.cityGroupOverSea
-  }
-}
 
 function handleBack() {
   router.back()

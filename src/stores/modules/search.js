@@ -6,7 +6,8 @@ const useSearch = defineStore('search', {
       city: '广州',
       cityInfo: {},
       startDate: 0,
-      endDate: 0
+      endDate: 0,
+      address: ''
     }
   }
 })

@@ -12,7 +12,7 @@
         <item-v3 v-if="item.discoveryContentType === 3" :info="item.data" @click="toDetail(item.data.houseId)"></item-v3>
       </template>
     </div>
-    <search-bar v-if="isShowSearchBar"></search-bar>
+    <search-bar v-if="isShowSearchBar" @click="toSearchResult"></search-bar>
   </div>
 </template>
 
@@ -21,12 +21,15 @@ import { ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { getHotSuggests, getCategory, getHouseList } from "@/services/modules/home"
 import  { onScrolling } from "@/hooks/scrolling"
+import { storeToRefs } from "pinia"
+import useSearch from "@/stores/modules/search"
 import search from "@/views/home/cpns/search.vue"
 import categoryList from "@/views/home/cpns/category-list.vue"
 import itemV9 from "@/views/home/cpns/item-v9.vue"
 import itemV3 from "@/views/home/cpns/item-v3.vue"
 import searchBar from "@/views/home/cpns/search-bar.vue"
 
+const { city, startDate, endDate } = storeToRefs(useSearch())
 const router = useRouter()
 const hotSuggests = ref([])
 const category = ref([])
@@ -65,6 +68,17 @@ function toDetail(id) {
     path: '/detail',
     query: {
       houseId: id
+    }
+  })
+}
+
+function toSearchResult() {
+  router.push({
+    path: '/search-result',
+    query: {
+      address: city.value,
+      startDate: startDate.value,
+      endDate: endDate.value
     }
   })
 }
