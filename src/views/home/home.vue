@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue"
+import { onActivated, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { getHotSuggests, getCategory, getHouseList } from "@/services/modules/home"
 import  { onScrolling } from "@/hooks/scrolling"
@@ -52,7 +52,6 @@ function getHouseListData() {
 getHouseListData()
 
 // 滚动事件
-onScrolling(getHouseListData)
 const { scrollTop } = onScrolling(getHouseListData)
 watch(scrollTop, () => {
   if(scrollTop.value > 300) {
@@ -83,6 +82,9 @@ function toSearchResult() {
   })
 }
 
+onActivated(() => {
+  isShowSearchBar.value = false
+})
 
 </script>
 

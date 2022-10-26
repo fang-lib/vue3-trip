@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">
+  <div class="loading" v-show="isLoading">
     <div class="loading-img_box">
       <img class="loading-img" src="@/assets/img/home/full-screen-loading.gif" />
     </div>
@@ -7,17 +7,20 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia"
+import useCommon from "@/stores/modules/common"
+const { isLoading } = storeToRefs(useCommon())
 
 </script>
 
 <style lang="less" scoped>
 .loading {
-  position: absolute;
+  position: fixed;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background: rgba(46, 46, 46, 0.2);
-  z-index: 9;
+  z-index: 80;
 
   .loading-img_box {
     position: absolute;
