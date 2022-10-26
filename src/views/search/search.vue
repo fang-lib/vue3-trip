@@ -4,14 +4,17 @@
 
     <div class="recommend-box" v-show="!value">
       <!-- 搜索历史 -->
-      <recommend-item color="#f0f3f6" title="搜索历史" operatorText="清空" name="delete-o" :keyWords="historyList" @onClick="handelClear" @itemClick="chooseWord"></recommend-item>
+      <recommend-item color="#f0f3f6" title="搜索历史" operatorText="清空" name="delete-o" :keyWords="historyList" @onClick="handelClear" @itemClick="handleSearch"></recommend-item>
       <template v-for="(group, index) in guessULike.groups" :key="index">
         <recommend-item :title="group.name" :keyWords="getKeyWords(group.suggests)" :color="group.name == '热门搜索' ? '#fff4ec' : '#f0f3f6'" @itemClick="chooseWord"></recommend-item>
       </template>
     </div>
 
     <div v-show="value">
-      <van-cell v-for="(item, index) in searchResult" :key="index" :title="item.standardName" :value="item.itemTypeName" @click="chooseWord(item.standardName)" />
+      <div class="cell" v-for="(item, index) in searchResult" :key="index" @click="chooseWord(item.standardName)">
+        <div class="title" v-html="getSuggestName(item.standardName)"></div>
+        <div class="value">{{ item.itemTypeName }}</div>
+      </div>
     </div>
 
   </div>
@@ -35,7 +38,6 @@ const searchResult = ref([])
 
 // 数据请求
 getGuessulike().then(res => {
-  console.log(res)
   guessULike.value = res
 })
 
@@ -54,19 +56,27 @@ function chooseWord(word) {
   router.back()
 }
 
-const handleSearch = _.debounce((value) => {
-  if(!value) return
+const handleSearch = _.debounce((word) => {
+  value.value = word
+  if(!value.value) return
   
   // 请求数据
-  keywordsearchsuggest(value).then(res => {
+  keywordsearchsuggest(value.value).then(res => {
     searchResult.value = res.suggests
-    // 去重
+    // 历史记录查重处理
     let list = new Set(historyList.value)
-    list.add(value)
+    list.add(value.value)
     historyList.value = [ ...list ]
     storage.setStorage('history', historyList.value)
   })
 }, 500)
+
+const getSuggestName = computed(() => {
+  return (word) => {
+    console.log(word.replace(value.value, `<span style="color: #ff9645">${value.value}</span>`))
+    return word.replaceAll(value.value, `<span style="color: #ff9645">${value.value}</span>`)
+  }
+})
 
 function handelClear() {
   historyList.value = []
@@ -86,5 +96,15 @@ function handelClear() {
 }
 .recommend-box {
   margin-top: 15px;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+
+  .value {
+    color: #999;
+  }
 }
 </style>
