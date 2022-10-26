@@ -6,6 +6,8 @@
   --van-index-anchor-sticky-text-color: var(--van-primary-color) !important;
   --van-index-bar-index-active-color: var(--van-primary-color) !important;
   --van-calendar-popup-height: 100% !important;
+  --van-tree-select-item-active-color: var(--van-primary-color) !important;
+  --van-sidebar-selected-border-color: var(--van-primary-color) !important;
 }
 
 /* 导航栏的字体颜色 */

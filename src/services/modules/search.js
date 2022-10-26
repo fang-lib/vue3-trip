@@ -1,5 +1,6 @@
 import http from "@/services/request/index"
 export const getSearchKeyWord = () => http.get({url: '/search/top'})
+export const getSearchResult = () => http.get({url: '/search/result'})
 
 // 测试用的配置，需要在vite.config.js中配置代理
 const TSET_URL = "http://localhost:3000/api";

@@ -73,7 +73,7 @@ const handleSearch = _.debounce((word) => {
 
 const getSuggestName = computed(() => {
   return (word) => {
-    console.log(word.replace(value.value, `<span style="color: #ff9645">${value.value}</span>`))
+    // console.log(word.replace(value.value, `<span style="color: #ff9645">${value.value}</span>`))
     return word.replaceAll(value.value, `<span style="color: #ff9645">${value.value}</span>`)
   }
 })
